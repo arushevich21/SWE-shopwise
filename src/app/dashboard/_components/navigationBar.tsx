@@ -11,6 +11,8 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPiggyBank, faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { searchDatabase } from '../../api/grocery/route.ts'
+import Link from 'next/link';
 
 interface NavigationBarProps {
   query: string;
@@ -54,18 +56,11 @@ export default function NavigationBar({query, setQuery, fetchData}: NavigationBa
             <FontAwesomeIcon icon={faUserCircle} size="xl" />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+            <DropdownItem asChild>
+              <Link key="login" href="/login" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">Login</Link>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
+            <DropdownItem asChild>
+              <Link key="register" href="/register" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">Register</Link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
