@@ -13,7 +13,7 @@ export default function Dashboard() {
   const fetchData = async (searchQuery: string) => {
     setLoading(true);
     axios
-      .get(`/api/grocery/route.ts?name=${searchQuery}`)
+      .get(`/api/grocery?name=${searchQuery}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <NavigationBar query={query} setQuery={setQuery} fetchData={fetchData} />
+      <NavigationBar query={query} setQuery={setQuery} fetchData={fetchData}/>
       <div className="flex flex-wrap gap-8 justify-center p-8 w-full max-h-[100vh] overflow-auto pb-2">
         <div className="max-w-[1200px] w-full flex flex-wrap gap-8">
           <ProductList data={data} loading={loading} />
