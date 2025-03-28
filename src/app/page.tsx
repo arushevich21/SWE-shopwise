@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import "./globals.css";
 import { useEffect, useState } from "react";
 
@@ -19,7 +20,7 @@ export default function Home() {
         <div className="navbar">
           <h1 className="logo">ShopWise</h1>
           <nav className="nav-links flex items-center">
-            <a href="/dashboard">Dashboard</a>
+            <Link href="/dashboard">Dashboard</Link>
             <a href="#vision">Vision</a>
             <a href="#team">Team</a>
             <a className="flex items-center space-x-2" href="#">
