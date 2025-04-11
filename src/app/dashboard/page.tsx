@@ -13,7 +13,7 @@ export default function Dashboard() {
   const fetchData = async (searchQuery: string) => {
     setLoading(true);
     axios
-      .get(`/api/grocery/route.ts?name=${searchQuery}`)
+      .get(`/api/grocery?name=${searchQuery}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
