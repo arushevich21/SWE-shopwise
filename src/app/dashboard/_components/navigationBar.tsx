@@ -11,7 +11,6 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPiggyBank, faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { searchDatabase } from '../../api/grocery/route.ts'
 import Link from 'next/link';
 
 interface NavigationBarProps {
@@ -31,10 +30,12 @@ export default function NavigationBar({query, setQuery, fetchData}: NavigationBa
   return (
     <Navbar isBordered isBlurred={false}>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
-          <FontAwesomeIcon className="mr-4" size="lg" icon={faPiggyBank} />
+      <NavbarBrand className="mr-4">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <FontAwesomeIcon size="lg" icon={faPiggyBank} />
           <p className="hidden sm:block font-bold text-inherit">ShopWise</p>
-        </NavbarBrand>
+        </Link>
+      </NavbarBrand>
         <Input
           classNames={{
             base: "max-w-full h-10",
@@ -56,11 +57,16 @@ export default function NavigationBar({query, setQuery, fetchData}: NavigationBa
             <FontAwesomeIcon icon={faUserCircle} size="xl" />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem asChild>
-              <Link key="login" href="/login" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">Login</Link>
+          <DropdownItem key="login">
+            <Link href="/login" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">
+                Login
+              </Link>
             </DropdownItem>
-            <DropdownItem asChild>
-              <Link key="register" href="/register" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">Register</Link>
+
+            <DropdownItem key="register">
+              <Link href="/register" className="text-black hover:bg-green-600 w-full block px-4 py-2 rounded-md">
+                Register
+              </Link>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
