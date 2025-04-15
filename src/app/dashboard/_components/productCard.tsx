@@ -6,12 +6,13 @@ interface CardProps {
   index: number;
   name: string;
   image: string;
+  price: string;
   description: string;
 }
 
 export default function ProductCard(props: CardProps) {
 
-  const { name, image, description, index } = props;
+  const { name, image, price, description, index } = props;
   const router = useRouter();
 
   return (
@@ -29,6 +30,7 @@ export default function ProductCard(props: CardProps) {
       <CardFooter className="pb-2 pt-2 flex-col items-start h-[100px]">
         <h4 className="font-bold text-large">{name}</h4>
         <small className="text-default-500 text-left">{description}</small>
+        <p className="text-sm font-semibold text-left mt-1">{price} <i className="font-light text-default-500 text-left">average</i></p>
       </CardFooter>
     </Card>
   );

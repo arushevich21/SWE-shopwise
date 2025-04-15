@@ -1,38 +1,45 @@
 "use client";
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import LoginUI from './_components/loginInput';
-import { supabase } from '../api/lib/util/supabaseClient.ts';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import LoginUI from "./_components/loginInput";
+import { supabase } from "../api/lib/util/supabaseClient";
 
 export default function Login() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorText, setErrorText] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
 
-  async function login(user, pass){
-    const { data, error } = await supabase
-      .from('users')
-      .select('username', 'password')
-      .match({ username: user, password: pass })
-      if (error || data.length != 1){
-        setErrorText("Login Failed!");
-      } else {
-        setErrorText("Login Successful!");
-      }
+  async function login(email: string, password: string) {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrorText("Login Failed: " + error.message);
+    } else {
+      setErrorText("Login Successful!");
+    }
   }
 
   useEffect(() => {
-    if (errorText == "Login Successful!"){
-      router.push("/dashboard");
+    if (errorText === "Login Successful!") {
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
     }
-  })
+  }, [errorText, router]);
 
   return (
-    <div>
-      <LoginUI username={username} password={password} setUsername={setUsername} setPassword={setPassword} login={login} errorText={errorText}/>
-    </div>
+    <LoginUI
+      email={email}
+      password={password}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      login={login}
+      errorText={errorText}
+    />
   );
 }

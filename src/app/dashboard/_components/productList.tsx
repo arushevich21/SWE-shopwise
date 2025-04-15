@@ -1,5 +1,5 @@
 import ProductCard from "./productCard";
-import {Spinner} from "@heroui/spinner";
+import { Spinner } from "@heroui/spinner";
 
 interface ProductListProps {
   data: Product[];
@@ -15,23 +15,33 @@ export default function ProductList({ data, loading }: ProductListProps) {
     );
   }
 
-  const uniqueProductsMap = new Map<string, Product>();
+  // Group by name and calculate average prices
+  const grouped = new Map<string, Product[]>();
   data.forEach((product) => {
-    if (!uniqueProductsMap.has(product.name)) {
-      uniqueProductsMap.set(product.name, product);
+    if (!grouped.has(product.name)) {
+      grouped.set(product.name, []);
     }
+    grouped.get(product.name)?.push(product);
   });
-  const uniqueProducts = Array.from(uniqueProductsMap.values());
+
+  const averagedProducts = Array.from(grouped.entries()).map(([name, group]) => {
+    const avgPrice = group.reduce((sum, p) => sum + p.price, 0) / group.length;
+    return {
+      ...group[0], // use the first item for image/description
+      price: avgPrice,
+    };
+  });
 
   return (
     <div className="max-w-[1200px] w-full flex flex-wrap gap-8">
-      {uniqueProducts.length > 0 ? (
-        uniqueProducts.map((product) => (
+      {averagedProducts.length > 0 ? (
+        averagedProducts.map((product) => (
           <ProductCard
             key={product.id}
             index={product.id}
             name={product.name}
-            image="https://media.istockphoto.com/id/177834117/photo/butter-isolated-on-white.jpg?s=612x612&w=0&k=20&c=wKXNDSvB-tzfT9RPdmKsH2JAGpBv7OISdUmGdegupxg="
+            price={`$${product.price.toFixed(2)}`} // format as string with $
+            image={product.image}
             description={product.description}
           />
         ))

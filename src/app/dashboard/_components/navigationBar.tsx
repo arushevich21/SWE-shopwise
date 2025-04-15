@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPiggyBank, faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPiggyBank, faSearch, faUserCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
 interface NavigationBarProps {
@@ -70,6 +70,9 @@ export default function NavigationBar({query, setQuery, fetchData}: NavigationBa
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
+        <Link href="/shopping-list" className="ml-4 hover:text-green-600 transition-all">
+          <FontAwesomeIcon icon={faShoppingCart} size="xl" />
+        </Link>
       </NavbarContent>
     </Navbar>
   );

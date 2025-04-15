@@ -16,6 +16,10 @@ export default function NavigationWrapper() {
     router.push(`/dashboard?search=${encodeURIComponent(q)}`);
   };
 
+  if (pathname === "/login" || pathname === "/register" || pathname === "/") {
+    return null;
+  }
+
   return (
     <NavigationBar
       query={query}

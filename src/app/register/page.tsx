@@ -1,37 +1,45 @@
-'use client';
+"use client";
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import RegistrationUI from './_components/registrationInput';
-import { supabase } from '../api/lib/util/supabaseClient.ts';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import RegistrationUI from "./_components/registrationInput";
+import { supabase } from "../api/lib/util/supabaseClient";
 
 export default function Register() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorText, setErrorText] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
 
-  async function register(user, pass){
-    const { error } = await supabase
-      .from('users')
-      .insert({ username: user, password: pass })
-      if (error){
-        setErrorText("Registration Failed!");
-      } else {
-        setErrorText("Registration Successful!");
-      }
+  async function register(email: string, password: string) {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrorText(error.message || "Registration failed.");
+    } else {
+      setErrorText("Registration successful!");
+    }
   }
 
   useEffect(() => {
-    if (errorText == "Registration Successful!"){
-      router.push("/login");
+    if (errorText === "Registration successful!") {
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     }
-  })
+  }, [errorText, router]);
 
   return (
-    <div>
-      <RegistrationUI username={username} password={password} setUsername={setUsername} setPassword={setPassword} register={register} errorText={errorText}/>
-    </div>
+    <RegistrationUI
+      email={email}
+      password={password}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      register={register}
+      errorText={errorText}
+    />
   );
 }
