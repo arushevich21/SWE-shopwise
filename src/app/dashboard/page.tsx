@@ -17,23 +17,20 @@ export default function Dashboard() {
   const [filteredBrands, setFilteredBrands] = useState<string[]>([]);
   const [priceSort, setPriceSort] = useState<'lowToHigh' | 'highToLow' | null>(null);
 
-  const fetchData = async (searchQuery: string) => {
+  const fetchData = async (searchQuery: string | null) => {
     setLoading(true);
-    axios
-      .get(`/api/grocery?name=${searchQuery}`)
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }
+    try {
+      const response = await axios.get(`/api/grocery${searchQuery ? `?name=${searchQuery}` : ''}`);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   useEffect(() => {
-    if (searchQuery) {
-      fetchData(searchQuery);
-    }
+    fetchData(searchQuery);
   }, [searchQuery]);
 
   const handleFilterApply = (filters: {
@@ -44,7 +41,6 @@ export default function Dashboard() {
     setPriceSort(filters.priceSort || null);
     fetchData(query);
   }
-
 
   return (
     <div>
