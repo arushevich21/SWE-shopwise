@@ -1,6 +1,8 @@
-import {Card, CardBody, CardFooter, Image} from "@heroui/react";
+import {Card, CardBody, CardFooter} from "@heroui/react";
 import { useRouter } from "next/navigation";
-
+import { useEffect, useState } from "react";
+import { searchPexelsImage } from "../../api/lib/util/pexelsClient";
+import Image from "next/image";
 
 interface CardProps {
   index: number;
@@ -11,21 +13,33 @@ interface CardProps {
 }
 
 export default function ProductCard(props: CardProps) {
-
   const { name, image, price, description, index } = props;
   const router = useRouter();
+  const [pexelsImage, setPexelsImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPexelsImage = async () => {
+      const imageUrl = await searchPexelsImage(name);
+      if (imageUrl) {
+        setPexelsImage(imageUrl);
+      }
+    };
+
+    fetchPexelsImage();
+  }, [name]);
 
   return (
     <Card radius="none" className="w-[210px] h-[250px]" key={index} isPressable disableRipple shadow="sm" onPress={() => router.push(`/detailed_product/${name}`)}>
       <CardBody className="overflow-visible p-0">
-        <Image
-          alt={name}
-          className="w-full object-cover h-[140px]"
-          radius="none"
-          shadow="sm"
-          src={image}
-          width="100%"
-        />
+        <div className="relative w-full h-[140px]">
+          <Image
+            alt={name}
+            src={pexelsImage || image}
+            fill
+            style={{ objectFit: 'cover' }}
+            unoptimized
+          />
+        </div>
       </CardBody>
       <CardFooter className="pb-2 pt-2 flex-col items-start h-[110px]">
         <div className="flex flex-col h-full justify-between w-full">
