@@ -4,9 +4,10 @@ import { Spinner } from "@heroui/spinner";
 interface ProductListProps {
   data: Product[];
   loading: boolean;
+  priceSort?: 'lowToHigh' | 'highToLow';
 }
 
-export default function ProductList({ data, loading }: ProductListProps) {
+export default function ProductList({ data, loading, priceSort }: ProductListProps) {
   if (loading) {
     return (
       <div className="w-full flex justify-center">
@@ -31,6 +32,14 @@ export default function ProductList({ data, loading }: ProductListProps) {
       price: avgPrice,
     };
   });
+
+  if (priceSort === 'lowToHigh') {
+    averagedProducts.sort((a, b) => a.price - b.price);
+  } else if (priceSort === 'highToLow') {
+    averagedProducts.sort((a, b) => b.price - a.price);
+  } else {
+    averagedProducts.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   return (
     <div className="max-w-[1200px] w-full flex flex-wrap gap-8">

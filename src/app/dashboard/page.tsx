@@ -14,8 +14,7 @@ export default function Dashboard() {
   const [data, setData] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
-  const [filteredBrands, setFilteredBrands] = useState<string[]>([]);
-  const [priceSort, setPriceSort] = useState<'lowToHigh' | 'highToLow' | null>(null);
+  const [priceSort, setPriceSort] = useState<'lowToHigh' | 'highToLow' | undefined>(undefined);
 
   const fetchData = async (searchQuery: string | null) => {
     setLoading(true);
@@ -34,13 +33,10 @@ export default function Dashboard() {
   }, [searchQuery]);
 
   const handleFilterApply = (filters: {
-    brands: string[];
     priceSort?: 'lowToHigh' | 'highToLow';
   }) => {
-    setFilteredBrands(filters.brands);
-    setPriceSort(filters.priceSort || null);
-    fetchData(query);
-  }
+    setPriceSort(filters.priceSort ?? undefined);
+  };
 
   return (
     <div>
@@ -50,7 +46,7 @@ export default function Dashboard() {
             <Filter onFilterApply={handleFilterApply} />
           </div>
           <div className="flex-grow">
-            <ProductList data={data} loading={loading} />
+            <ProductList data={data} loading={loading} priceSort={priceSort} />
           </div>
         </div>
       </div>
