@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
 
-interface FilterProps {
-  onFilterApply: (filters: {
+interface SortProps {
+  onSortApply: (filters: {
     priceSort?: 'lowToHigh' | 'highToLow';
   }) => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ onFilterApply }) => {
+const Sort: React.FC<SortProps> = ({ onSortApply }) => {
   const [priceSort, setPriceSort] = useState<'lowToHigh' | 'highToLow' | null>(null);
 
   const handlePriceSortToggle = (sort: 'lowToHigh' | 'highToLow') => {
     setPriceSort(prevSort => (prevSort === sort ? null : sort));
   };
 
-  const handleApplyFilters = () => {
-    onFilterApply({
+  const handleApplySort = () => {
+    onSortApply({
       priceSort: priceSort || undefined,
     });
   };
 
   return (
     <div className="w-64 shadow-md rounded-lg border border-gray-200 bg-white">
-      <div className="text-lg font-bold p-4 border-b border-gray-200">
-        Sort Options
-      </div>
-
       <div className="p-4">
         <h3 className="font-semibold mb-2">Sort by Price</h3>
         <div className="space-y-2">
@@ -45,7 +41,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterApply }) => {
         </div>
 
         <button
-          onClick={handleApplyFilters}
+          onClick={handleApplySort}
           className="mt-4 w-full bg-sky-500 hover:bg-sky-600 text-white py-2 rounded transition"
         >
           Apply Sort
@@ -55,4 +51,4 @@ const Filter: React.FC<FilterProps> = ({ onFilterApply }) => {
   );
 };
 
-export default Filter;
+export default Sort;

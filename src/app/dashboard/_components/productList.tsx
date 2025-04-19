@@ -7,7 +7,7 @@ interface ProductListProps {
   priceSort?: 'lowToHigh' | 'highToLow';
 }
 
-export default function ProductList({ data, loading, priceSort }: ProductListProps) {
+export default function ProductList({ data, loading, category, priceSort }: ProductListProps) {
   if (loading) {
     return (
       <div className="w-full flex justify-center">
@@ -20,8 +20,11 @@ export default function ProductList({ data, loading, priceSort }: ProductListPro
   const grouped = new Map<string, Product[]>();
   data.forEach((product) => {
     if (!grouped.has(product.name)) {
-      grouped.set(product.name, []);
+      if (category.length == 0 || category.includes(product.category)){
+        grouped.set(product.name, []);
+      }
     }
+    
     grouped.get(product.name)?.push(product);
   });
 
