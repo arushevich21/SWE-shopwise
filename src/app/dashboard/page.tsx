@@ -42,6 +42,7 @@ export default function Dashboard() {
   };
 
   const handleApplyFilters = ((filters) => {
+
     setCategoryFilter(filters.categories);
   });
 
@@ -49,7 +50,7 @@ export default function Dashboard() {
     <div>
       <div className="flex flex-wrap gap-8 justify-center p-8 w-full max-h-[100vh] overflow-auto pb-2">
         <div className="flex max-w-[1400px] w-full">
-          <div className="w-64 mr-8">
+          <div className="w-64 mr-8 space-y-4">
             <Sort onSortApply={handleSortApply} />
             <Filter categories={baseCategories} onFilterApply={handleApplyFilters}/>
           </div>

@@ -51,7 +51,7 @@ export default function NavigationBar({query, setQuery, fetchData}: NavigationBa
     <Navbar isBordered isBlurred={false}>
       <NavbarContent justify="start">
         <NavbarBrand className="mr-4">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <FontAwesomeIcon size="lg" icon={faPiggyBank} />
             <p className="hidden sm:block font-bold text-inherit">ShopWise</p>
           </Link>

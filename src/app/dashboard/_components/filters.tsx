@@ -25,7 +25,7 @@ const Filter: React.FC<FilterProps> = ({ categories, onFilterApply }) => {
   return (
     <div className="w-64 shadow-md rounded-lg border border-gray-200 bg-white">
       <div className="p-4">
-        <h3 className="font-semibold mb-2 mt-4">Filter by Category</h3>
+        <h3 className="font-semibold mb-2">Filter by Category</h3>
         <div className="space-y-2">
           {categories.map((category) => (
             <div key={category} className="flex items-center">
