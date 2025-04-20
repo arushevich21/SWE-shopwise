@@ -11,7 +11,6 @@ import {
   DropdownMenu,
 } from "@heroui/react";
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPiggyBank, faSearch, faUserCircle, faShoppingCart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
